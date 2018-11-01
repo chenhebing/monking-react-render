@@ -1,0 +1,12 @@
+{
+    "extends": "mpfe",
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "no-return-await": "off",
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error"
+    }
+}
