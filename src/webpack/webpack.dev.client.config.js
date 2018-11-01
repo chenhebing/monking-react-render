@@ -5,12 +5,12 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import config from 'monking/lib/config';
+import VConsolePlugin from 'vconsole-webpack-plugin';
 
 import ExposePlugin from './expose.plugin';
 
-import config from 'monking/lib/config';
 import baseConfig from './webpack.base.config';
-import VConsolePlugin from 'vconsole-webpack-plugin';
 
 const postcssLoaderConfig = config.postcssConfig ? 'postcss-loader' : {
     loader: 'postcss-loader',

@@ -86,7 +86,17 @@ const clientConfig = merge(baseConfig, {
             React: require.resolve('react'),
             ReactDOM: require.resolve('react-dom')
         })
-    ]
+    ],
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                ...((config.webpackConfig && config.webpackConfig.splitChunks) || []).reduce((result, item) => {
+                    result[item.name] = item;
+                    return result;
+                }, {})
+            }
+        }
+    }
 });
 
 export default clientConfig;

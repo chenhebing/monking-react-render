@@ -25,9 +25,9 @@ assethook({
 });
 
 const view = (pagePath) => {
+    global.webpackDefineSpaServer = true;
     // 这边本来是可以依赖注入的，但是babel转码的时候，将参数名字改变了，依赖注入失效
     const viewHtmlSsr = (context) => (locals) => {
-        global.webpackDefineSpaServer = true;
         const staticPath = config.path.public;
         const mfs = context.app.webpackMemoryFs;
         const fileContent = config.isProd
