@@ -50,8 +50,11 @@ export default class Home {
 ```javascript
 
 export default {
-    openAnalyzer: false,    // 是否打开webpack的bundle结果
-    showVConsole: false      // 是否打开vconsole
+    openAnalyzer: false,        // 是否打开webpack的bundle结果
+    showVConsole: false,        // 是否打开vconsole
+    webpackConfig: {
+        splitChunks: []         //用于配置webpack split chunk
+    }
 };
 
 ```
