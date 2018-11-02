@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import 'react-dom';
 import { className } from './index.css';
 
 export default class Home extends PureComponent {
