@@ -21,7 +21,7 @@ export default class Home extends PureComponent {
             <div className={className}>
                 <button type="button" onClick={this.handleClick.bind(this)}>+</button>
                 <span>{this.state.count}</span>
-                <div>test3</div>
+                <div>test</div>
             </div>
         );
     }

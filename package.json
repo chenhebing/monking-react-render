@@ -1,6 +1,6 @@
 {
   "name": "monking-react-render",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "monking for render react",
   "main": "lib/index.js",
   "scripts": {
@@ -41,9 +41,6 @@
     "react-dom": "^16.3.2",
     "react-hot-loader": "^4.3.11",
     "react-hot-loader-loader": "^0.0.6",
-    "react-redux": "^5.0.7",
-    "react-router-dom": "^4.3.1",
-    "redux": "^4.0.0",
     "string-to-stream": "^1.1.1",
     "style-loader": "^0.21.0",
     "vconsole-webpack-plugin": "^1.4.2",
