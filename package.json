@@ -1,6 +1,6 @@
 {
   "name": "monking-react-render",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "monking for render react",
   "main": "lib/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "build": "webpack --config examples/webpack/webpack.config.js"
   },
   "peerDependencies": {
-    "monking": "^1.0.0"
+    "monking": "^1.1.0"
   },
   "dependencies": {
     "@babel/preset-env": "^7.1.0",

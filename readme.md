@@ -8,7 +8,7 @@
 $ # 强烈建议使用 yarn 安装依赖
 $ yarn add monking-react-render
 ```
-monking >= 1.0.0
+monking >= 1.1.0
 
 ### Configuration Middleware
 
@@ -46,18 +46,21 @@ export default class Home {
 
 ### Expose Config
 
+monking-react-render 暴露了一些 config，用户可以自行覆盖默认配置。[config 详细配置](https://github.com/chenhebing/monking-react-render/blob/master/src/config.js)
+
+monking-react-render 作为 monking 的一个插件存在，配置文件需要自行添加配置，以支持 monking 引入。
 
 ```javascript
+// config/default.js
 
 export default {
-    openAnalyzer: false,        // 是否打开webpack的bundle结果
-    showVConsole: false,        // 是否打开vconsole
-    webpackConfig: {
-        splitChunks: []         //用于配置webpack split chunk
-    }
+    pluginConfig: ['monking-react-render/lib/config']
 };
-
 ```
+
+### Document
+
+[文档地址](https://github.com/chenhebing/monking-react-render/blob/master/doc/index.md)
 
 ### License
 
