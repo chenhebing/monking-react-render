@@ -60,7 +60,7 @@ export default {
 
 ### Document
 
-[文档地址](https://github.com/chenhebing/monking-react-render/blob/master/doc/index.md)
+[文档地址](https://github.com/chenhebing/monking-react-render/blob/master/docs/index.md)
 
 ### License
 

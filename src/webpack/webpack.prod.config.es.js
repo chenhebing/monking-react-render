@@ -1,24 +1,10 @@
 import merge from 'webpack-merge';
-import webpack from 'webpack';
-import path from 'path';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import VConsolePlugin from 'vconsole-webpack-plugin';
 import config from 'monking/lib/config';
 
-import ExposePlugin from './expose.plugin';
-
-import baseConfig from './webpack.base.config';
-
-const postcssLoaderConfig = config.postcssConfig ? 'postcss-loader' : {
-    loader: 'postcss-loader',
-    options: {
-        config: {
-            path: path.resolve(__dirname, '../postcss.config.js')
-        }
-    }
-};
+import baseConfig, { postcssLoaderConfig, htmlWebpackPluginTemplate, htmlWebpackPluginChunks } from './webpack.base.config';
 
 const clientConfig = merge(baseConfig, {
     output: {
@@ -61,9 +47,9 @@ const clientConfig = merge(baseConfig, {
         }),
         ...Object.keys(baseConfig.entry).map(name => {
             return new HtmlWebpackPlugin({
-                chunks: [name, ...((config.webpackConfig && config.webpackConfig.splitChunks) || []).map(item => item.name)],
+                chunks: [name, ...htmlWebpackPluginChunks],
                 filename: `${name}.html`,
-                template: path.join(config.path.templates, config.template),
+                template: htmlWebpackPluginTemplate,
                 inject: true,
                 minify: {
                     removeComments: true,
@@ -74,29 +60,8 @@ const clientConfig = merge(baseConfig, {
                     removeTagWhitespace: true
                 }
             });
-        }),
-        new webpack.DefinePlugin({
-            webpackDefineSpaServer: false,
-            ...config.webpackDefinePlugin
-        }),
-        new VConsolePlugin({
-            enable: !config.isProd && config.showVConsole
-        }),
-        new ExposePlugin({
-            React: require.resolve('react'),
-            ReactDOM: require.resolve('react-dom')
         })
-    ],
-    optimization: {
-        splitChunks: {
-            cacheGroups: {
-                ...((config.webpackConfig && config.webpackConfig.splitChunks) || []).reduce((result, item) => {
-                    result[item.name] = item;
-                    return result;
-                }, {})
-            }
-        }
-    }
+    ]
 });
 
 export default clientConfig;

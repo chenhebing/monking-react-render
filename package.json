@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "rm -rf lib && babel src --out-dir lib",
     "dev": "nodemon --trace-deprecation examples/index",
-    "build": "webpack --config examples/webpack/webpack.config.js"
+    "build": "npm run prepare && webpack --config examples/webpack/webpack.config.js"
   },
   "peerDependencies": {
     "monking": "^1.1.0"
@@ -47,6 +47,7 @@
     "webpack": "^4.8.0",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.2",
+    "webpack-expose-plugin": "^1.0.0",
     "webpack-merge": "^4.1.2"
   },
   "devDependencies": {

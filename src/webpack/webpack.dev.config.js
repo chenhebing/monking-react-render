@@ -1,25 +1,11 @@
 import merge from 'webpack-merge';
-import webpack from 'webpack';
-import path from 'path';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import config from 'monking/lib/config';
-import VConsolePlugin from 'vconsole-webpack-plugin';
 
-import ExposePlugin from './expose.plugin';
-
-import baseConfig from './webpack.base.config';
-
-const postcssLoaderConfig = config.postcssConfig ? 'postcss-loader' : {
-    loader: 'postcss-loader',
-    options: {
-        config: {
-            path: path.resolve(__dirname, '../postcss.config.js')
-        }
-    }
-};
+import baseConfig, { postcssLoaderConfig, htmlWebpackPluginTemplate, htmlWebpackPluginChunks } from './webpack.base.config';
 
 const devConfig = merge(baseConfig, {
     output: {
@@ -63,47 +49,17 @@ const devConfig = merge(baseConfig, {
         }),
         ...Object.keys(baseConfig.entry).map(name => {
             return new HtmlWebpackPlugin({
-                chunks: [name, ...((config.webpackConfig && config.webpackConfig.splitChunks) || []).map(item => item.name)],
+                chunks: [name, ...htmlWebpackPluginChunks],
                 filename: `${name}.dev.html`,
-                template: path.join(config.path.templates, config.template),
-                inject: true,
-                minify: {
-                    removeComments: true,
-                    collapseWhitespace: true,
-                    conservativeCollapse: true,
-                    minifyJS: true,
-                    removeAttributeQuotes: true,
-                    removeTagWhitespace: true
-                }
+                template: htmlWebpackPluginTemplate
             });
         }),
-        new webpack.DefinePlugin({
-            webpackDefineSpaServer: false,
-            ...config.webpackDefinePlugin
-        }),
         new FriendlyErrorsWebpackPlugin(),
-        new VConsolePlugin({
-            enable: !config.isProd && config.showVConsole
-        }),
         new BundleAnalyzerPlugin({
             analyzerPort: config.port + 2,
             openAnalyzer: !!config.openAnalyzer
-        }),
-        new ExposePlugin({
-            React: require.resolve('react'),
-            ReactDOM: require.resolve('react-dom')
         })
-    ],
-    optimization: {
-        splitChunks: {
-            cacheGroups: {
-                ...((config.webpackConfig && config.webpackConfig.splitChunks) || []).reduce((result, item) => {
-                    result[item.name] = item;
-                    return result;
-                }, {})
-            }
-        }
-    }
+    ]
 });
 
 devConfig.entry = Object.keys(devConfig.entry).reduce((result, item) => {

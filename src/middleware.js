@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import koaWebpack from 'koa-webpack';
 import { importFile } from 'monking/lib/util';
 
-import devConfig from './webpack/webpack.dev.client.config';
+import devConfig from './webpack/webpack.dev.config';
 
 export default async monking => {
     let compiler;

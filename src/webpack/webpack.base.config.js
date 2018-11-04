@@ -1,7 +1,9 @@
 import glob from 'glob';
 import path from 'path';
-
+import webpack from 'webpack';
 import config from 'monking/lib/config';
+import WebpackExposePlugin from 'webpack-expose-plugin';
+import VConsolePlugin from 'vconsole-webpack-plugin';
 
 const isProd = config.isProd;
 
@@ -51,7 +53,43 @@ const baseConfig = {
                 name: '[name].[ext]?[hash]'
             }
         }]
+    },
+    plugins: [
+        new WebpackExposePlugin({
+            React: require.resolve('react'),
+            ReactDOM: require.resolve('react-dom')
+        }),
+        new VConsolePlugin({
+            enable: !config.isProd && config.showVConsole
+        }),
+        new webpack.DefinePlugin({
+            webpackDefineSpaServer: false,
+            ...config.webpackDefinePlugin
+        })
+    ],
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                ...((config.webpackConfig && config.webpackConfig.splitChunks) || []).reduce((result, item) => {
+                    result[item.name] = item;
+                    return result;
+                }, {})
+            }
+        }
     }
 };
+
+export const postcssLoaderConfig = config.postcssConfig ? 'postcss-loader' : {
+    loader: 'postcss-loader',
+    options: {
+        config: {
+            path: path.resolve(__dirname, '../postcss.config.js')
+        }
+    }
+};
+
+export const htmlWebpackPluginTemplate = path.join(config.path.templates, config.template);
+
+export const htmlWebpackPluginChunks = ((config.webpackConfig && config.webpackConfig.splitChunks) || []).map(item => item.name);
 
 export default baseConfig;
