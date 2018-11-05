@@ -4,8 +4,6 @@ import path from 'path';
 import fs from 'fs';
 import serializeJs from 'serialize-javascript';
 import handlebars from 'handlebars';
-import stringToStream from 'string-to-stream';
-import multistream from 'multistream';
 import moduleAlias from 'module-alias';
 import hook from 'css-modules-require-hook';
 
@@ -17,7 +15,8 @@ import config from 'monking/lib/config';
 moduleAlias.addAliases(config.alias);
 
 hook({
-    generateScopedName: '[name]_[local]__[hash:base64:5]'
+    generateScopedName: '[name]_[local]__[hash:base64:5]',
+    ...(config.cmrhConf ? config.cmrhConf : {})
 });
 
 assethook({
@@ -33,20 +32,14 @@ const view = (pagePath) => {
         const fileContent = config.isProd
             ? fs.readFileSync(path.join(staticPath, pagePath, 'index.html'), 'utf8')
             : mfs.readFileSync(path.join(staticPath, pagePath, 'index.dev.html'), 'utf8');
-        const outlet = config.outlet || '<!--monking-ssr-template-outlet-->';
-        const template = handlebars.compile(fileContent)(Object.assign({
-            $initState: serializeJs(locals),
-            outlet
-        }, locals));
-        const templateSplitArr = template.split(outlet);
-        const page = importFile(path.join(config.path.pages, pagePath, 'index.js'));
-        const $react = ReactDomServer.renderToNodeStream(React.createElement(page, locals));
+        const page = importFile(path.join(config.path.pages, pagePath, 'index'));
+        const $react = ReactDomServer.renderToString(React.createElement(page, locals));
         context.type = 'text/html';
-        context.body = multistream([
-            stringToStream(templateSplitArr[0]),
+        context.body = handlebars.compile(fileContent)({
             $react,
-            stringToStream(templateSplitArr[1])
-        ]);
+            $initState: serializeJs(locals),
+            ...locals
+        });
     };
     const viewHtml = (context) => () => {
         const staticPath = config.path.public;
@@ -59,7 +52,7 @@ const view = (pagePath) => {
     };
 
     if (config.ssrRender) {
-        importFile(path.join(config.path.pages, pagePath, 'index.js'));
+        importFile(path.join(config.path.pages, pagePath, 'index'));
     }
 
     return (controller, action) => {

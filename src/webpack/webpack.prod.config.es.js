@@ -1,4 +1,5 @@
 import merge from 'webpack-merge';
+import webpack from 'webpack';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -42,9 +43,10 @@ const clientConfig = merge(baseConfig, {
             dry: false
         }),
         new MiniCssExtractPlugin({
-            filename: '[name].[hash].css',
-            chunkFilename: '[id].[hash].css'
+            filename: '[name].[contenthash].css',
+            chunkFilename: '[id].[contenthash].css'
         }),
+        new webpack.HashedModuleIdsPlugin(),
         ...Object.keys(baseConfig.entry).map(name => {
             return new HtmlWebpackPlugin({
                 chunks: [name, ...htmlWebpackPluginChunks],

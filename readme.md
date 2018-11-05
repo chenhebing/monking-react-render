@@ -12,7 +12,7 @@ monking >= 1.1.0
 
 ### Configuration Middleware
 
-monking-react-render 基于 koa-webpack 提供了前端热更新的支持，需要将其配置到 config 中，例如：
+monking-react-render 基于 koa-webpack 提供了前端热更新的支持，需要将其配置到 config 中，例如：
 
 ```javascript
 // config/default.js

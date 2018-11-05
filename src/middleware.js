@@ -21,7 +21,8 @@ export default async monking => {
             logLevel: 'error'
         },
         hotClient: {
-            port: monking.config.port + 1
+            port: monking.config.port + 1,
+            allEntries: true
         }
     });
     monking.wss = middleware.hotClient.server;

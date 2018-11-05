@@ -23,7 +23,7 @@ const devConfig = merge(baseConfig, {
                 plugins: ['react-hot-loader/babel']
             }
         }, {
-            test: /page[\\/]\w*[\\/]index\.jsx?$/,
+            test: /page[\\/][.-\w]*[\\/]index\.jsx?$/,
             loader: require.resolve('react-hot-loader-loader')
         }, {
             test: /\.css$/,

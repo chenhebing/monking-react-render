@@ -17,7 +17,7 @@ monking-react-render 对模板使用了 handlebar 来做预渲染，可以在 co
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 </head>
 <body>
-    <div id="app">{{{outlet}}}</div>
+    <div id="app">{{{$react}}}</div>
     <script>
         window.__INITIAL_STATE__ = {{{$initState}}};
         window.onload = function () {

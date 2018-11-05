@@ -24,6 +24,7 @@ const alias = {
 export default {
     template: 'layout.html',
     ssrRender: true,
+    onlyServer: false,
     path: defaultPath,
     alias,
     webpackConfig: {

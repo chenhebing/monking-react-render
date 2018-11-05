@@ -40,17 +40,17 @@ monking-react-render 提供了服务端渲染，单页及多页可以同时共�
 
 #### page
 
-client 端最重要核心的部分是 page 目录，我们约定，如果page为一级目录，那么二级目录必须包含 index.js 作为 webpack 打包的入口文件。
+client 端最重要核心的部分是 page 目录，我们约定，如果page为一级目录，那么二级目录必须包含 index.jsx 作为 webpack 打包的入口文件。
 
 ##### 多页
 
 我们这边给的例子没有引入 redux，使用最基本的 react 开发；props是服务端渲染的预取数据。
 
 ```js
-// home/index.js
+// home/index.jsx
 
 import React, { Component } from 'react';
-import { className } from './index.css;
+import { className } from './index.css';
 
 export default class Home extends Component {
     constructor (props) {
@@ -70,6 +70,7 @@ export default class Home extends Component {
         );
     }
 }
+
 ```
 
 ##### 单页
@@ -77,7 +78,7 @@ export default class Home extends Component {
 引入了 react-router 来管理路由、react-redux 来管理状态，单页的应用和多页可以同时存在项目中，我们可以根据不同的应用场景，选择使用单页还是多页。
 
 ```js
-// spa/index.js
+// spa/index.jsx
 
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
@@ -118,7 +119,9 @@ export default App;
 
 #### HMR
 
-monking 中实现了服务端的局部热更新；monking-react-render 实现了客户端热更新，极大的提高了开发效率。大多数情况对开发人员来说都是无感知的，但是由于 redux 维护的 state 不会被 react-hot-loader 保留，所以对于使用 redux 的应用，生成 reducer 的需要手动热更新 reducer的 state 变化。
+monking 中实现了服务端的局部热更新；monking-react-render 实现了客户端热更新，极大的提高了开发效率。大多数情况对开发人员来说都是无感知的，但是由于 redux 维护的 state 不会被 react-hot-loader 保留，所以对于使用 redux 的应用，生成 reducer 的需要手动热更新 reducer的 state 变化。
+
+
 
 ```js
 // lib/index.js

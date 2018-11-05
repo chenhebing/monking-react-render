@@ -1,12 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { className } from './index.css';
 
-export default class Home extends PureComponent {
+export default class Home extends Component {
     constructor (props) {
         super(props);
-
         this.state = {
-            count: 1
+            count: 2
         };
     }
     handleClick () {
@@ -20,7 +19,6 @@ export default class Home extends PureComponent {
             <div className={className}>
                 <button type="button" onClick={this.handleClick.bind(this)}>+</button>
                 <span>{this.state.count}</span>
-                <div>test</div>
             </div>
         );
     }
