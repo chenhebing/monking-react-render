@@ -59,9 +59,6 @@ const baseConfig = {
             React: require.resolve('react'),
             ReactDOM: require.resolve('react-dom')
         }),
-        new VConsolePlugin({
-            enable: !config.isProd && config.showVConsole
-        }),
         new webpack.DefinePlugin({
             webpackDefineSpaServer: false,
             ...config.webpackDefinePlugin
@@ -78,6 +75,14 @@ const baseConfig = {
         }
     }
 };
+
+if (!config.isProd && config.showVConsole) {
+    baseConfig.plugins.push(
+        new VConsolePlugin({
+            enable: true
+        })
+    );
+}
 
 export const postcssLoaderConfig = config.postcssConfig ? 'postcss-loader' : {
     loader: 'postcss-loader',
