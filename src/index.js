@@ -51,7 +51,7 @@ const view = (pagePath) => {
         context.body = fileContent;
     };
 
-    if (config.ssrRender) {
+    if (config.ssrRender && config.isProd) {
         importFile(path.join(config.path.pages, pagePath, 'index'));
     }
 
