@@ -2,7 +2,6 @@ import merge from 'webpack-merge';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import config from 'monking/lib/config';
 import HappyPack from 'happypack';
 import os from 'os';
@@ -45,10 +44,6 @@ const devConfig = merge(baseConfig, {
             });
         }),
         new FriendlyErrorsWebpackPlugin(),
-        new BundleAnalyzerPlugin({
-            analyzerPort: config.port + 2,
-            openAnalyzer: !!config.openAnalyzer
-        }),
         new HappyPack({
             id: 'happyBabel',
             threadPool: happyThreadPool,

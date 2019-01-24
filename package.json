@@ -14,8 +14,7 @@
     "koa-webpack": "^5.1.0",
     "monking": "^1.1.0",
     "react-hot-loader": "^4.3.11",
-    "react-hot-loader-loader": "^0.0.6",
-    "webpack-bundle-analyzer": "^3.0.3"
+    "react-hot-loader-loader": "^0.0.6"
   },
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
@@ -57,8 +56,7 @@
     "monking": "^1.1.0",
     "nodemon": "^1.17.3",
     "react-hot-loader": "^4.3.11",
-    "react-hot-loader-loader": "^0.0.6",
-    "webpack-bundle-analyzer": "^2.13.1"
+    "react-hot-loader-loader": "^0.0.6"
   },
   "author": "chenhebing <1025263994@qq.com>",
   "license": "MIT",
