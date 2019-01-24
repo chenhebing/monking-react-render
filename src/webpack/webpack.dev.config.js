@@ -4,8 +4,12 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import config from 'monking/lib/config';
+import HappyPack from 'happypack';
+import os from 'os';
 
 import baseConfig, { postcssLoaderConfig, htmlWebpackPluginTemplate, htmlWebpackPluginChunks } from './webpack.base.config';
+
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 const devConfig = merge(baseConfig, {
     output: {
@@ -17,29 +21,15 @@ const devConfig = merge(baseConfig, {
     module: {
         rules: [{
             test: /\.jsx?$/,
-            loader: 'babel-loader',
-            exclude: /node_modules/,
-            options: {
-                plugins: ['react-hot-loader/babel']
-            }
+            use: 'happypack/loader?id=happyBabel',
+            exclude: /node_modules/
         }, {
             test: /page[\\/][.-\w]*[\\/]index\.jsx?$/,
             loader: require.resolve('react-hot-loader-loader')
         }, {
             test: /\.css$/,
             exclude: /node_modules/,
-            use: [
-                'css-hot-loader',
-                MiniCssExtractPlugin.loader,
-                {
-                    loader: 'css-loader',
-                    options: {
-                        localIdentName: '[name]_[local]__[hash:base64:5]'
-                    }
-                },
-                postcssLoaderConfig,
-                'less-loader'
-            ]
+            use: 'happypack/loader?id=happyStyle'
         }]
     },
     plugins: [
@@ -58,6 +48,37 @@ const devConfig = merge(baseConfig, {
         new BundleAnalyzerPlugin({
             analyzerPort: config.port + 2,
             openAnalyzer: !!config.openAnalyzer
+        }),
+        new HappyPack({
+            id: 'happyBabel',
+            threadPool: happyThreadPool,
+            loaders: [{
+                loader: 'babel-loader',
+                options: {
+                    plugins: ['react-hot-loader/babel']
+                }
+            }]
+        }),
+        new HappyPack({
+            id: 'happyStyle',
+            threadPool: happyThreadPool,
+            loaders: [
+                'css-hot-loader',
+                'style-loader',
+                {
+                    loader: 'css-loader',
+                    options: {
+                        localIdentName: '[name]_[local]__[hash:base64:5]'
+                    }
+                },
+                postcssLoaderConfig,
+                {
+                    loader: 'less-loader',
+                    options: {
+                        javascriptEnabled: true
+                    }
+                }
+            ]
         })
     ]
 });

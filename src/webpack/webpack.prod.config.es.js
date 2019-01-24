@@ -4,8 +4,12 @@ import CleanWebpackPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import config from 'monking/lib/config';
-
 import baseConfig, { postcssLoaderConfig, htmlWebpackPluginTemplate, htmlWebpackPluginChunks } from './webpack.base.config';
+
+import HappyPack from 'happypack';
+import os from 'os';
+
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 const clientConfig = merge(baseConfig, {
     output: {
@@ -17,7 +21,7 @@ const clientConfig = merge(baseConfig, {
     module: {
         rules: [{
             test: /\.jsx?$/,
-            loader: 'babel-loader',
+            use: 'happypack/loader?id=happyBabel',
             exclude: /node_modules/
         }, {
             test: /\.css$/,
@@ -31,7 +35,12 @@ const clientConfig = merge(baseConfig, {
                     }
                 },
                 postcssLoaderConfig,
-                'less-loader'
+                {
+                    loader: 'less-loader',
+                    options: {
+                        javascriptEnabled: true
+                    }
+                }
             ]
         }]
     },
@@ -62,6 +71,11 @@ const clientConfig = merge(baseConfig, {
                     removeTagWhitespace: true
                 }
             });
+        }),
+        new HappyPack({
+            id: 'happyBabel',
+            threadPool: happyThreadPool,
+            loaders: ['babel-loader']
         })
     ]
 });

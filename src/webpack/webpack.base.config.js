@@ -28,10 +28,6 @@ const baseConfig = {
     module: {
         noParse: /es6-promise\.js$/, // avoid webpack shimming process
         rules: [{
-            test: /\.jsx?$/,
-            loader: 'babel-loader',
-            exclude: /node_modules/
-        }, {
             test: /\.(png|jpg?g|gif)$/,
             loader: 'url-loader',
             options: {
