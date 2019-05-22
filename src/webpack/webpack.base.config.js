@@ -31,7 +31,7 @@ const baseConfig = {
             test: /\.(png|jpg?g|gif)$/,
             loader: 'url-loader',
             options: {
-                limit: 100000,
+                limit: 10000,
                 name: '[name].[ext]?[hash]'
             }
         }, {
