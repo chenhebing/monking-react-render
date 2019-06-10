@@ -72,7 +72,7 @@ const baseConfig = {
     }
 };
 
-if (!config.isProd && config.showVConsole) {
+if (config.showVConsole) {
     baseConfig.plugins.push(
         new VConsolePlugin({
             enable: true
