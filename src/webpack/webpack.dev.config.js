@@ -63,7 +63,8 @@ const devConfig = merge(baseConfig, {
                 {
                     loader: 'css-loader',
                     options: {
-                        localIdentName: '[name]_[local]__[hash:base64:5]'
+                        localIdentName: '[name]_[local]__[hash:base64:5]',
+                        modules: true
                     }
                 },
                 postcssLoaderConfig,
