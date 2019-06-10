@@ -1,6 +1,6 @@
 {
   "name": "monking-react-render",
-  "version": "1.1.20",
+  "version": "1.1.21",
   "description": "monking for render react",
   "main": "lib/index.js",
   "scripts": {
