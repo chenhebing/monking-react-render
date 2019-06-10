@@ -5,8 +5,16 @@
         background-color: red;
         display: flex;
     }
-    span {
+    .count {
         font-size: 20px;
         margin-left: 20px;
+        color: blue;
+    }
+
+    :global {
+        .title {
+            color: yellow;
+        }
     }
 }
+

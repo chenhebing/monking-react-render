@@ -18,7 +18,7 @@ export default class Home extends Component {
         return (
             <div className={className}>
                 <button type="button" onClick={this.handleClick.bind(this)}>+</button>
-                <span>{this.state.count}</span>
+                <span className="count">{this.state.count}</span>
             </div>
         );
     }
